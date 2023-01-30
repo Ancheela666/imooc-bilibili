@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD MAPPER 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.bilibili.dao.BulletChatDao">
+    
+    <insert id="addBulletChat" parameterType="com.imooc.bilibili.domain.BulletChat">
+        insert into
+            t_bullet_chat(
+                userId,
+                videoId,
+                content,
+                bulletTime,
+                createTime
+            ) values (
+                #{userId},
+                #{videoId},
+                #{content},
+                #{bulletTime},
+                #{createTime}
+            )
+    </insert>
+
+    <select id="getBulletChats" parameterType="java.util.Map" resultType="com.imooc.bilibili.domain.BulletChat">
+        select
+            *
+        from
+            t_bullet_chat
+        where
+            videoId = #{videoId}
+            <if test="startDate != null and startDate != '' ">
+                and createTime <![CDATA[>=]]> #{startDate}
+            </if>
+            <if test="endDate != null and endDate != '' ">
+                and createTime <![CDATA[<=]]> #{endDate}
+            </if>
+    </select>
+    
+</mapper>
